@@ -40,12 +40,12 @@ class MainActivity : AppCompatActivity(), LifecycleOwner, TitleDialogFragment.Ti
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        //Create NavHostFragment
+        /*//Create NavHostFragment
         val host : NavHostFragment = supportFragmentManager.findFragmentById(R.id.host_fragment)
                 as NavHostFragment? ?: return
 
-        val navController = host.navController
-        setupBottomNavMenu(navController)
+        val navController = host.navController*/
+
 
         //Request  permissions
         if (!allPermissionsGranted()){
@@ -54,10 +54,6 @@ class MainActivity : AppCompatActivity(), LifecycleOwner, TitleDialogFragment.Ti
         }
 
         createDirectory()
-    }
-    private fun setupBottomNavMenu(navController : NavController){
-        val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNav)
-        bottomNav?.setupWithNavController(navController)
     }
 
     override fun onRequestPermissionsResult(
@@ -85,19 +81,13 @@ class MainActivity : AppCompatActivity(), LifecycleOwner, TitleDialogFragment.Ti
             FileManager.getFileBase())
     }
 
+    //used when user selects title
     override fun onDialogPositiveClick(dialog: DialogFragment) {
         val titleDialog = dialog as? TitleDialogFragment
         val selection = titleDialog?.titleSelected
         if (selection != null) {
             Repository.eventTitle = selection
         }
-        displaySnackbar()
-    }
-
-    fun displaySnackbar(){
-        Log.d(TAG, "++++++++ Start displaySnackbar() +++++++")
-        Snackbar.make(findViewById(R.id.cameraFragment), getString(R.string.event_created_notification,
-            Repository.eventTitle), Snackbar.LENGTH_LONG).show()
     }
 
     // Needed to make the add event fragment work when using the pickers: 10/11/20 trying to move it back to fragment
